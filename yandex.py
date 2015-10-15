@@ -27,8 +27,16 @@ class YandexTranslator(object):
             print(type(e))
         return response
 
-    # def detect(self):
-
+    def detect(self, sentence):
+        response = ""
+        try:
+            response = requests.get(self.getUrl("det"), params={"key": self.key, "text": sentence})
+            response = response.json()
+            print(response["code"])
+        except Exception as e:
+            print(type(e))
+            print(e.args)
+        return response["lang"]
 
 yt = YandexTranslator("trnsl.1.1.20151011T175944Z.f6a3de65607a853a.1899ccefa5b8eaf25acc983905132b5212f47a37")
-print(yt.langs())
+print(yt.detect("hello world"))
